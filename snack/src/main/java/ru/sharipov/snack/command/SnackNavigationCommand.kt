@@ -6,10 +6,10 @@ import ru.sharipov.snack.animations.Animations
 
 interface SnackNavigationCommand {
     val containerId: Int
-    val tag: String
     val timeoutMs: Long?
     val animations: Animations?
     val fragmentClass: Class<out Fragment>
+    val tag: String get() = fragmentClass.simpleName
 
     fun prepareBundle(bundle: Bundle) {
         // Override if you need to pass extra data to a snack fragment

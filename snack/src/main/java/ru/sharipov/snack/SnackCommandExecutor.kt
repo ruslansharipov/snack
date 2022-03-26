@@ -22,7 +22,7 @@ class SnackCommandExecutor<C: SnackNavigationCommand>(
 
         val animations = command.animations
         if (animations != null) {
-            transaction.setCustomAnimations(animations.enter, animations.exit, animations.enter, animations.exit)
+            transaction.setCustomAnimations(animations.enter, animations.exit)
         }
 
         val snack = command.createFragment()

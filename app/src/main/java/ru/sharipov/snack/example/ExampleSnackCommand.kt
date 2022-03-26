@@ -16,7 +16,7 @@ sealed class ExampleSnackCommand: DefaultSnackCommand() {
     abstract val colorRes: Int
     abstract val gravity: Int
 
-    override val tag: String = "ExampleSnackCommand $text"
+    override val tag: String get() = "ExampleSnackCommand $text"
     override val timeoutMs: Long = 1500
     override val fragmentClass: Class<out Fragment> = ExampleSnackFragment::class.java
 
