@@ -3,16 +3,13 @@ package ru.sharipov.snack
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import ru.sharipov.snack.command.SnackFragmentFactory
 import ru.sharipov.snack.command.SnackNavigationCommand
 import ru.sharipov.snack.extensions.removeOnTimeout
 import java.io.Serializable
-import java.util.*
 import kotlin.collections.ArrayList
 
 class SnackCommandExecutor<C: SnackNavigationCommand>(
     private val fragmentManager: FragmentManager,
-    private val snackFragmentFactory: SnackFragmentFactory<C>,
     savedState: Bundle?
 ) {
 
@@ -28,10 +25,7 @@ class SnackCommandExecutor<C: SnackNavigationCommand>(
             transaction.setCustomAnimations(animations.enter, animations.exit, animations.enter, animations.exit)
         }
 
-        val snack = snackFragmentFactory.createSnack(command)
-        if (snack.arguments == null) {
-            snack.arguments = Bundle()
-        }
+        val snack = command.createFragment()
         snack.arguments?.putSerializable(SNACK_COMMAND_KEY, SnackCommandEntity(command))
 
         val tag = command.tag
