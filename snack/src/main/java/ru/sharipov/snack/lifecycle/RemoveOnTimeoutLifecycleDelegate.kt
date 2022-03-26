@@ -10,7 +10,7 @@ import ru.sharipov.snack.executor.SnackCommandExecutor
 import ru.sharipov.snack.executor.SnackStateEntity
 import ru.sharipov.snack.extensions.removeFragment
 
-class RemoveOnTimeoutLifecycleDelegate(
+internal class RemoveOnTimeoutLifecycleDelegate(
     private val tag: String,
     private val timeout: Long,
     override val fragment: Fragment,

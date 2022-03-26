@@ -3,7 +3,7 @@ package ru.sharipov.snack.extensions
 import androidx.fragment.app.Fragment
 import ru.sharipov.snack.lifecycle.RemoveOnTimeoutLifecycleDelegate
 
-fun Fragment.removeOnTimeout(
+internal fun Fragment.removeOnTimeout(
     tag: String,
     timeoutMs: Long,
     removeAnimRes: Int?

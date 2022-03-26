@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 
-abstract class ScopedLifecycleDelegate: DefaultLifecycleObserver {
+internal abstract class ScopedLifecycleDelegate: DefaultLifecycleObserver {
 
     protected abstract val fragment: Fragment
 

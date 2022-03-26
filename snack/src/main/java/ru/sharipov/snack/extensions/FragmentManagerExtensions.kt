@@ -2,7 +2,7 @@ package ru.sharipov.snack.extensions
 
 import androidx.fragment.app.FragmentManager
 
-fun FragmentManager.removeFragment(tag: String, removeAnimRes: Int?) {
+internal fun FragmentManager.removeFragment(tag: String, removeAnimRes: Int?) {
     val fragmentToRemove = findFragmentByTag(tag)
     if (fragmentToRemove != null) {
         val transaction = beginTransaction()

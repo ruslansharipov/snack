@@ -7,7 +7,7 @@ import ru.sharipov.snack.command.SnackNavigationCommand
 import ru.sharipov.snack.extensions.removeOnTimeout
 import kotlin.collections.ArrayList
 
-class SnackCommandExecutor<C: SnackNavigationCommand>(
+internal class SnackCommandExecutor<C: SnackNavigationCommand>(
     private val fragmentManager: FragmentManager,
     savedState: Bundle?
 ) {

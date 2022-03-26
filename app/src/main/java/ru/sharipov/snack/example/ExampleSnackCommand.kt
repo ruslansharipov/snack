@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.Gravity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import ru.sharipov.snack.animations.Animations
-import ru.sharipov.snack.animations.FromBottomToBottomAnimations
-import ru.sharipov.snack.animations.FromBottomToRightAnimations
-import ru.sharipov.snack.animations.FromTopToTopAnimations
+import ru.sharipov.snack.animations.*
 import ru.sharipov.snack.command.DefaultSnackCommand
 
 sealed class ExampleSnackCommand: DefaultSnackCommand() {
@@ -33,7 +30,7 @@ sealed class ExampleSnackCommand: DefaultSnackCommand() {
     data class TopErrorSnack(override val text: String): ExampleSnackCommand() {
         override val colorRes: Int = android.R.color.holo_red_light
         override val gravity: Int = Gravity.TOP
-        override val animations: Animations = FromTopToTopAnimations
+        override val animations: Animations = FadeInFadeOutAnimations
     }
 
     data class BottomSuccessSnack(override val text: String): ExampleSnackCommand() {
