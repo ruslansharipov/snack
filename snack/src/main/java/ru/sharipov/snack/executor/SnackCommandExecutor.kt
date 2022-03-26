@@ -1,11 +1,10 @@
-package ru.sharipov.snack
+package ru.sharipov.snack.executor
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import ru.sharipov.snack.command.SnackNavigationCommand
 import ru.sharipov.snack.extensions.removeOnTimeout
-import java.io.Serializable
 import kotlin.collections.ArrayList
 
 class SnackCommandExecutor<C: SnackNavigationCommand>(
@@ -26,7 +25,8 @@ class SnackCommandExecutor<C: SnackNavigationCommand>(
         }
 
         val snack = command.createFragment()
-        snack.arguments?.putSerializable(SNACK_COMMAND_KEY, SnackCommandEntity(command))
+        val snackStateEntity = SnackStateEntity(command.tag, command.timeoutMs, command.animations?.exit)
+        snack.arguments?.putSerializable(SNACK_STATE_ENTITY_KEY, snackStateEntity)
 
         val tag = command.tag
         transaction.add(command.containerId, snack, tag)
@@ -40,31 +40,27 @@ class SnackCommandExecutor<C: SnackNavigationCommand>(
     fun saveState(outState: Bundle?) {
         if (outState != null) {
             val savedStack = fragmentManager.fragments.mapNotNull { fragment: Fragment ->
-                fragment.arguments?.getSerializable(SNACK_COMMAND_KEY) as? SnackCommandEntity
+                fragment.arguments?.getSerializable(SNACK_STATE_ENTITY_KEY) as? SnackStateEntity
             }
-            outState.putSerializable(SNACK_COMMAND_STATE_KEY, ArrayList(savedStack))
+            outState.putSerializable(SNACK_COMMAND_EXECUTOR_STATE_KEY, ArrayList(savedStack))
         }
     }
 
     private fun restoreState(bundle: Bundle?) {
-        val snackList = bundle?.getSerializable(SNACK_COMMAND_STATE_KEY) as? ArrayList<SnackCommandEntity>
+        val snackList = bundle?.getSerializable(SNACK_COMMAND_EXECUTOR_STATE_KEY) as? ArrayList<SnackStateEntity>
         if (!snackList.isNullOrEmpty()) {
-            snackList.forEach { snackCommandEntity: SnackCommandEntity ->
-                val command = snackCommandEntity.command
-                val timeoutMs = command.timeoutMs
-                if (timeoutMs != null) {
-                    val fragment = fragmentManager.findFragmentByTag(command.tag)
-                    fragment?.removeOnTimeout(command.tag, timeoutMs, command.animations?.exit)
+            snackList.forEach { snackStateEntity: SnackStateEntity ->
+                val (tag, timeLeftMs, exitAnimRes) = snackStateEntity
+                if (timeLeftMs != null) {
+                    val fragment = fragmentManager.findFragmentByTag(tag)
+                    fragment?.removeOnTimeout(tag, timeLeftMs, exitAnimRes)
                 }
             }
         }
     }
 
-    private data class SnackCommandEntity(val command: SnackNavigationCommand): Serializable
-
-    companion object {
-        const val SNACK_COMMAND_STATE_KEY = "SNACK_COMMAND_STATE_KEY"
-        const val SNACK_COMMAND_KEY = "SNACK_COMMAND_KEY"
+    internal companion object {
+        const val SNACK_COMMAND_EXECUTOR_STATE_KEY = "SNACK_COMMAND_STATE_KEY"
+        const val SNACK_STATE_ENTITY_KEY = "SNACK_COMMAND_KEY"
     }
 }
-

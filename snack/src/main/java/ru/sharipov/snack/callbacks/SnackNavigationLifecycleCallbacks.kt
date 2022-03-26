@@ -10,7 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import ru.sharipov.snack.SnackCommandExecutor
+import ru.sharipov.snack.executor.SnackCommandExecutor
 import ru.sharipov.snack.bus.SnackCommandBus
 import ru.sharipov.snack.command.SnackNavigationCommand
 

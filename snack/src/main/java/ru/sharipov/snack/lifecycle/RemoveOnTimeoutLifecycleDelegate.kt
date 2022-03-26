@@ -6,6 +6,8 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.consumeAsFlow
+import ru.sharipov.snack.executor.SnackCommandExecutor
+import ru.sharipov.snack.executor.SnackStateEntity
 import ru.sharipov.snack.extensions.removeFragment
 
 class RemoveOnTimeoutLifecycleDelegate(
@@ -24,6 +26,11 @@ class RemoveOnTimeoutLifecycleDelegate(
 
     override fun onStop(owner: LifecycleOwner) {
         timerJob?.cancel()
+        val snackEntity = fragment.arguments?.getSerializable(SnackCommandExecutor.SNACK_STATE_ENTITY_KEY) as? SnackStateEntity
+        if (snackEntity != null) {
+            val updatedEntity = snackEntity.copy(timeLeftMs = millisLeft)
+            fragment.arguments?.putSerializable(SnackCommandExecutor.SNACK_STATE_ENTITY_KEY, updatedEntity)
+        }
     }
 
     private fun setUpTimer() {
