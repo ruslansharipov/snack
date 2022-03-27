@@ -21,7 +21,7 @@ class SnackNavigationLifecycleCallbacks(
     private val handler = Handler(Looper.getMainLooper())
 
     private var navigationExecutor: SnackCommandExecutor? = null
-    private var activeActivity: Activity? = null
+    private var activeActivity: AppCompatActivity? = null
     private var pendingCommand: SnackCommand? = null
 
     private var savedState: Bundle? = null
@@ -60,12 +60,16 @@ class SnackNavigationLifecycleCallbacks(
         pendingCommand = null
     }
 
+    override fun onActivityPaused(activity: Activity) {
+        activeActivity = null
+    }
+
     private fun handleNewNavigationCommand(
         command: SnackCommand?,
         executor: SnackCommandExecutor?,
-        activity: Activity?
+        activity: AppCompatActivity?
     ) {
-        if (activity != null && activity.isFinishing) {
+        if (activity == null || activity.isFinishing) {
             pendingCommand = command
         } else if (executor != null && command != null) {
             handler.post {

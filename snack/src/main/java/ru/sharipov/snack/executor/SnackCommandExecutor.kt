@@ -23,7 +23,6 @@ internal class SnackCommandExecutor(
             is SnackCommand.Close -> executeClose(command.snack)
             is SnackCommand.Open -> executeOpen(command.snack)
         }
-
     }
 
     fun saveState(outState: Bundle?) {
