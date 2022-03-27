@@ -4,16 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="8dp"
     android:layout_gravity="bottom"
-    android:gravity="bottom"
+    android:orientation="vertical"
     tools:context=".example.MainActivity">
+
+    <LinearLayout
+        android:gravity="bottom"
+        android:layout_marginHorizontal="8dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
     <Button
         android:id="@+id/top_btn"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginEnd="4dp"
         android:layout_weight="1"
         android:text="Top-Top" />
 
@@ -32,5 +38,20 @@
         android:layout_marginStart="4dp"
         android:layout_weight="1"
         android:text="Bottom-Right" />
+
+    <Button
+        android:id="@+id/button_complex"
+        android:layout_marginStart="4dp"
+        android:text="Complex"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/complicated_snack_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

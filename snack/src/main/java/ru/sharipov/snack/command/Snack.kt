@@ -5,7 +5,8 @@ import androidx.fragment.app.Fragment
 import ru.sharipov.snack.animations.Animations
 import java.io.Serializable
 
-interface SnackNavigationCommand: Serializable {
+interface Snack: Serializable {
+
     val containerId: Int
     val timeoutMs: Long?
     val animations: Animations?

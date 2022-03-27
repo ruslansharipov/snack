@@ -10,19 +10,20 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import ru.sharipov.snack.command.SnackCommand
 import ru.sharipov.snack.executor.SnackCommandExecutor
 import ru.sharipov.snack.bus.SnackCommandBus
-import ru.sharipov.snack.command.SnackNavigationCommand
+import ru.sharipov.snack.command.Snack
 
-class SnackNavigationLifecycleCallbacks<C: SnackNavigationCommand>(
-    snackCommandBus: SnackCommandBus<C>
+class SnackNavigationLifecycleCallbacks<S: Snack>(
+    snackCommandBus: SnackCommandBus<S>
 ): DefaultActivityLifecycleCallbacks() {
 
     private val handler = Handler(Looper.getMainLooper())
 
-    private var navigationExecutor: SnackCommandExecutor<C>? = null
+    private var navigationExecutor: SnackCommandExecutor<S>? = null
     private var activeActivity: Activity? = null
-    private var pendingCommand: C? = null
+    private var pendingCommand: SnackCommand<S>? = null
 
     private var savedState: Bundle? = null
 
@@ -30,7 +31,7 @@ class SnackNavigationLifecycleCallbacks<C: SnackNavigationCommand>(
         GlobalScope.launch {
             snackCommandBus.observeSnackCommands()
                 .flowOn(Dispatchers.Main)
-                .collectLatest { navigationCommand: C ->
+                .collectLatest { navigationCommand: SnackCommand<S> ->
                     handleNewNavigationCommand(
                         command = navigationCommand,
                         executor = navigationExecutor,
@@ -61,8 +62,8 @@ class SnackNavigationLifecycleCallbacks<C: SnackNavigationCommand>(
     }
 
     private fun handleNewNavigationCommand(
-        command: C?,
-        executor: SnackCommandExecutor<C>?,
+        command: SnackCommand<S>?,
+        executor: SnackCommandExecutor<S>?,
         activity: Activity?
     ) {
         if (activity != null && activity.isFinishing) {
