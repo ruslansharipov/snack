@@ -9,7 +9,7 @@ import ru.sharipov.snack.extensions.removeFragment
 import ru.sharipov.snack.extensions.removeOnTimeout
 import kotlin.collections.ArrayList
 
-internal class SnackCommandExecutor<S: Snack>(
+internal class SnackCommandExecutor(
     private val fragmentManager: FragmentManager,
     savedState: Bundle?
 ) {
@@ -18,10 +18,10 @@ internal class SnackCommandExecutor<S: Snack>(
         restoreState(savedState)
     }
 
-    fun execute(command: SnackCommand<S>) {
+    fun execute(command: SnackCommand) {
         when(command) {
-            is SnackCommand.Close -> executeCloseCommand(command.snack)
-            is SnackCommand.Open -> executeOpenCommand(command.snack)
+            is SnackCommand.Close -> executeClose(command.snack)
+            is SnackCommand.Open -> executeOpen(command.snack)
         }
 
     }
@@ -35,7 +35,7 @@ internal class SnackCommandExecutor<S: Snack>(
         }
     }
 
-    private fun executeOpenCommand(snack: S) {
+    private fun executeOpen(snack: Snack) {
         val transaction = fragmentManager.beginTransaction()
 
         val animations = snack.animations
@@ -56,7 +56,7 @@ internal class SnackCommandExecutor<S: Snack>(
         transaction.commit()
     }
 
-    private fun executeCloseCommand(snack: S) {
+    private fun executeClose(snack: Snack) {
         fragmentManager.removeFragment(snack.tag, snack.animations?.exit)
     }
 

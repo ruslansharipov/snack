@@ -1,8 +1,8 @@
 package ru.sharipov.snack.command
 
-sealed class SnackCommand<S> {
-    abstract val snack: S
+sealed class SnackCommand {
+    abstract val snack: Snack
 
-    data class Open<S>(override val snack: S): SnackCommand<S>()
-    data class Close<S>(override val snack: S): SnackCommand<S>()
+    data class Open(override val snack: Snack): SnackCommand()
+    data class Close(override val snack: Snack): SnackCommand()
 }

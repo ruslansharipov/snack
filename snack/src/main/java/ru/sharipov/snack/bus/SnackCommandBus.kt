@@ -6,24 +6,24 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import ru.sharipov.snack.command.Snack
 import ru.sharipov.snack.command.SnackCommand
 
-open class SnackCommandBus<S : Snack> :
-    SnackCommandEmitter<S>,
-    SnackCommandObservable<S> {
+open class SnackCommandBus :
+    SnackCommandEmitter,
+    SnackCommandObservable {
 
-    private val commandSharedFlow = MutableSharedFlow<SnackCommand<S>>(
+    private val commandSharedFlow = MutableSharedFlow<SnackCommand>(
         onBufferOverflow = BufferOverflow.DROP_OLDEST,
         extraBufferCapacity = 16
     )
 
-    override fun observeSnackCommands(): Flow<SnackCommand<S>> {
+    override fun observeSnackCommands(): Flow<SnackCommand> {
         return commandSharedFlow
     }
 
-    override fun open(snack: S) {
+    override fun open(snack: Snack) {
         commandSharedFlow.tryEmit(SnackCommand.Open(snack))
     }
 
-    override fun close(snack: S) {
+    override fun close(snack: Snack) {
         commandSharedFlow.tryEmit(SnackCommand.Close(snack))
     }
 }

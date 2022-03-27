@@ -2,9 +2,9 @@ package ru.sharipov.snack.bus
 
 import ru.sharipov.snack.command.Snack
 
-interface SnackCommandEmitter<S : Snack> {
+interface SnackCommandEmitter {
 
-    fun open(snack: S)
+    fun open(snack: Snack)
 
-    fun close(snack: S)
+    fun close(snack: Snack)
 }

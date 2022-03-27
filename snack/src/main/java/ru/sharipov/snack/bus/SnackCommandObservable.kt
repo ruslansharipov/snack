@@ -1,10 +1,9 @@
 package ru.sharipov.snack.bus
 
 import kotlinx.coroutines.flow.Flow
-import ru.sharipov.snack.command.Snack
 import ru.sharipov.snack.command.SnackCommand
 
-interface SnackCommandObservable<S : Snack> {
+interface SnackCommandObservable {
 
-    fun observeSnackCommands(): Flow<SnackCommand<S>>
+    fun observeSnackCommands(): Flow<SnackCommand>
 }
