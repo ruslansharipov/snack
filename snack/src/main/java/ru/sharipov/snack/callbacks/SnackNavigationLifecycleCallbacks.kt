@@ -14,9 +14,8 @@ import kotlinx.coroutines.launch
 import ru.sharipov.snack.command.SnackCommand
 import ru.sharipov.snack.executor.SnackCommandExecutor
 import ru.sharipov.snack.bus.SnackCommandBus
-import ru.sharipov.snack.factory.SnackFragmentFactory
 
-class SnackNavigationLifecycleCallbacks(
+internal class SnackNavigationLifecycleCallbacks(
     snackCommandBus: SnackCommandBus,
     private val fragmentFactory: FragmentFactory? = null
 ): DefaultActivityLifecycleCallbacks() {
@@ -34,6 +33,7 @@ class SnackNavigationLifecycleCallbacks(
             snackCommandBus.observeSnackCommands()
                 .flowOn(Dispatchers.Main)
                 .collectLatest { navigationCommand: SnackCommand ->
+                    // TODO log
                     handleNewNavigationCommand(
                         command = navigationCommand,
                         executor = navigationExecutor,

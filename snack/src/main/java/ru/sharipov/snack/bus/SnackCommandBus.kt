@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import ru.sharipov.snack.command.Snack
 import ru.sharipov.snack.command.SnackCommand
 
-open class SnackCommandBus :
+internal class SnackCommandBus :
     SnackCommandEmitter,
     SnackCommandObservable {
 
@@ -25,5 +25,9 @@ open class SnackCommandBus :
 
     override fun close(snack: Snack) {
         commandSharedFlow.tryEmit(SnackCommand.Close(snack))
+    }
+
+    override fun close(tag: String, exitAnimationRes: Int?) {
+        commandSharedFlow.tryEmit(SnackCommand.Close(tag, exitAnimationRes))
     }
 }

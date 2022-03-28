@@ -51,7 +51,7 @@ class ComplicatedSnackFragment: Fragment() {
                                 viewModel.handleError()
                             }
                             ComplicatedSnackState.SUCCESS -> {
-                                (requireActivity().application as? App)?.snackCommandBus?.close(
+                                (requireActivity().application as? App)?.snackCommandEmitter?.close(
                                     ExampleSnack.ComplicatedSnack
                                 )
                             }

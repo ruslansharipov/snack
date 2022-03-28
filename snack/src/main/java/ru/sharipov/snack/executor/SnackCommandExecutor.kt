@@ -26,7 +26,7 @@ internal class SnackCommandExecutor(
 
     fun execute(command: SnackCommand) {
         when(command) {
-            is SnackCommand.Close -> executeClose(command.snack)
+            is SnackCommand.Close -> executeClose(command)
             is SnackCommand.Open -> executeOpen(command.snack)
         }
     }
@@ -50,8 +50,8 @@ internal class SnackCommandExecutor(
         transaction.commit()
     }
 
-    private fun executeClose(snack: Snack) {
-        fragmentManager.removeFragment(snack.tag, snack.animations?.exit)
+    private fun executeClose(closeCommand: SnackCommand.Close) {
+        fragmentManager.removeFragment(closeCommand.tag, closeCommand.exitAnimationRes)
     }
 
     private fun setUpTimeout(

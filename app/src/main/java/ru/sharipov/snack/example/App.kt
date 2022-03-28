@@ -1,17 +1,9 @@
 package ru.sharipov.snack.example
 
 import android.app.Application
-import ru.sharipov.snack.bus.SnackCommandBus
-import ru.sharipov.snack.callbacks.SnackNavigationLifecycleCallbacks
+import ru.sharipov.snack.extensions.SnackCommandEmitter
 
 class App: Application() {
 
-    val snackCommandBus = SnackCommandBus()
-
-    override fun onCreate() {
-        super.onCreate()
-        registerActivityLifecycleCallbacks(
-            SnackNavigationLifecycleCallbacks(snackCommandBus)
-        )
-    }
+    val snackCommandEmitter = SnackCommandEmitter(this)
 }

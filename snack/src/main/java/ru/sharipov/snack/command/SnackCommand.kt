@@ -1,8 +1,10 @@
 package ru.sharipov.snack.command
 
-sealed class SnackCommand {
-    abstract val snack: Snack
+internal sealed class SnackCommand {
 
-    data class Open(override val snack: Snack): SnackCommand()
-    data class Close(override val snack: Snack): SnackCommand()
+    data class Open(val snack: Snack) : SnackCommand()
+
+    data class Close(val tag: String, val exitAnimationRes: Int?) : SnackCommand() {
+        constructor(snack: Snack) : this(tag = snack.tag, exitAnimationRes = snack.animations?.exit)
+    }
 }
