@@ -13,9 +13,11 @@ import kotlinx.coroutines.launch
 import ru.sharipov.snack.command.SnackCommand
 import ru.sharipov.snack.executor.SnackCommandExecutor
 import ru.sharipov.snack.bus.SnackCommandBus
+import ru.sharipov.snack.factory.SnackFragmentFactory
 
 class SnackNavigationLifecycleCallbacks(
-    snackCommandBus: SnackCommandBus
+    snackCommandBus: SnackCommandBus,
+    private val fragmentFactory: SnackFragmentFactory
 ): DefaultActivityLifecycleCallbacks() {
 
     private val handler = Handler(Looper.getMainLooper())
@@ -51,7 +53,7 @@ class SnackNavigationLifecycleCallbacks(
     override fun onActivityResumed(activity: Activity) {
         require(activity is AppCompatActivity)
         activeActivity = activity
-        navigationExecutor = SnackCommandExecutor(activity.supportFragmentManager, savedState)
+        navigationExecutor = SnackCommandExecutor(activity.supportFragmentManager, fragmentFactory, savedState)
         savedState = null
     }
 

@@ -16,13 +16,4 @@ interface Snack: Serializable {
     fun prepareBundle(bundle: Bundle) {
         // Override if you need to pass extra data to a snack fragment
     }
-
-    fun createFragment(): Fragment {
-        val snackFragment = fragmentClass.getConstructor().newInstance()
-        val bundle = Bundle()
-        snackFragment.arguments = bundle
-
-        prepareBundle(bundle)
-        return snackFragment
-    }
 }

@@ -3,6 +3,9 @@ package ru.sharipov.snack.example
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import ru.sharipov.snack.R
 
 class MainActivity : AppCompatActivity() {
@@ -21,9 +24,10 @@ class MainActivity : AppCompatActivity() {
             )
         }
         findViewById<Button>(R.id.bottom_right_btn).setOnClickListener {
-            (application as App).snackCommandBus.open(
-                ExampleSnack.SimpleSnack.BottomRightSnack
-            )
+            lifecycleScope.launch {
+                delay(2000)
+                (application as App).snackCommandBus.open(ExampleSnack.SimpleSnack.BottomRightSnack)
+            }
         }
         findViewById<Button>(R.id.button_complex).setOnClickListener {
             (application as App).snackCommandBus.open(ExampleSnack.ComplicatedSnack)

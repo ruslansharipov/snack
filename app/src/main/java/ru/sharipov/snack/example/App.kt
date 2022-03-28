@@ -11,7 +11,7 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         registerActivityLifecycleCallbacks(
-            SnackNavigationLifecycleCallbacks(snackCommandBus)
+            SnackNavigationLifecycleCallbacks(snackCommandBus, ExampleSnackFragmentFactory())
         )
     }
 }

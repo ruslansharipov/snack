@@ -3,14 +3,18 @@ package ru.sharipov.snack.executor
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import ru.sharipov.snack.animations.Animations
 import ru.sharipov.snack.command.SnackCommand
 import ru.sharipov.snack.command.Snack
 import ru.sharipov.snack.extensions.removeFragment
 import ru.sharipov.snack.extensions.removeOnTimeout
+import ru.sharipov.snack.factory.SnackFragmentFactory
 import kotlin.collections.ArrayList
 
 internal class SnackCommandExecutor(
     private val fragmentManager: FragmentManager,
+    private val fragmentFactory: SnackFragmentFactory,
     savedState: Bundle?
 ) {
 
@@ -37,26 +41,53 @@ internal class SnackCommandExecutor(
     private fun executeOpen(snack: Snack) {
         val transaction = fragmentManager.beginTransaction()
 
-        val animations = snack.animations
-        if (animations != null) {
-            transaction.setCustomAnimations(animations.enter, animations.exit)
-        }
+        supplyAnimations(snack, transaction)
+        val snackFragment = createSnackFragment(snack)
+        setUpTimeout(snack, transaction, snackFragment)
 
-        val snackFragment = snack.createFragment()
-        val snackStateEntity = SnackStateEntity(snack.tag, snack.timeoutMs, snack.animations?.exit)
-        snackFragment.arguments?.putSerializable(SNACK_STATE_ENTITY_KEY, snackStateEntity)
-
-        val tag = snack.tag
-        transaction.add(snack.containerId, snackFragment, tag)
-        val timeoutMs = snack.timeoutMs
-        if (timeoutMs != null) {
-            snackFragment.removeOnTimeout(tag, timeoutMs, animations?.exit)
-        }
         transaction.commit()
     }
 
     private fun executeClose(snack: Snack) {
         fragmentManager.removeFragment(snack.tag, snack.animations?.exit)
+    }
+
+    private fun setUpTimeout(
+        snack: Snack,
+        transaction: FragmentTransaction,
+        snackFragment: Fragment
+    ) {
+        val tag = snack.tag
+        transaction.add(snack.containerId, snackFragment, tag)
+        val timeoutMs = snack.timeoutMs
+        if (timeoutMs != null) {
+            snackFragment.removeOnTimeout(tag, timeoutMs, snack.animations?.exit)
+        }
+    }
+
+    private fun supplyAnimations(
+        snack: Snack,
+        transaction: FragmentTransaction
+    ): Animations? {
+        val animations = snack.animations
+        if (animations != null) {
+            transaction.setCustomAnimations(animations.enter, animations.exit)
+        }
+        return animations
+    }
+
+    private fun createSnackFragment(snack: Snack): Fragment {
+        val snackStateEntity = SnackStateEntity(snack.tag, snack.timeoutMs, snack.animations?.exit)
+        val snackFragment = fragmentFactory.createFragment(snack)
+        val bundle = Bundle()
+        bundle.putSerializable(SNACK_STATE_ENTITY_KEY, snackStateEntity)
+        snack.prepareBundle(bundle)
+        if (snackFragment.arguments == null) {
+            snackFragment.arguments = bundle
+        } else {
+            snackFragment.arguments?.putAll(bundle)
+        }
+        return snackFragment
     }
 
     private fun restoreState(bundle: Bundle?) {
