@@ -52,7 +52,7 @@ data class ExampleSnack(val text: String): Snack {
     override val containerId: Int = android.R.id.content  
     override val timeoutMs: Long = 1500L 
     override val animations: Animations = FromBottomToBottomAnimations
-    override val fragmentClass: Class<out Fragment> = ExampleSnackFragment::class.java
+    override val className: String = "ru.sharipov.example.ExampleSnackFragment"
     override val tag: String = "ExampleSnackFragment $text"
 
     override fun prepareBundle(bundle: Bundle) {
@@ -71,22 +71,22 @@ snackCommandBus.open(snack)
 //snackCommandBus.close(snack)
 ```
 
-
 ## Tips
 1. Use custom `containerId` if you want snacks to appear in some particular container
 2. Set `timeoutMs` field as null if you don't want your snacks to hide automatically
 3. Be sure to keep tags unique throughout all snacks, especially if they appear on the screen at the same time
 4. Check out the `example` module to see more examples of usage
 5. You can override `animations` field if you want something extraordinary ;)
+6. You can pass custom fragment factory to SnackNavigationLifecycleCallbacks if you want to gain full access over fragment creation
 
 ## Roadmap
 
-1. Migrate to FragmentFactory for fragment creation instead of using reflection
-2. Implement snack queue and config with strategies of adding snacks to queue when the navigator is not able to show them, drop oldest or even show only last added
-3. Add tests
-4. Add documentation
-5. More examples
-6. Deploy artefacts to have the ability of using the library with the gradle
+~~1. Migrate to FragmentFactory for fragment creation instead of using reflection~~.   
+2. Implement snack queue and config with strategies of adding snacks to queue when the navigator is not able to show them, drop oldest or even show only last added.   
+3. Add tests.  
+4. Add documentation.  
+5. More examples.  
+6. Deploy artefacts to have the ability of using the library with the gradle.  
 
 ## Videos
 <details>
