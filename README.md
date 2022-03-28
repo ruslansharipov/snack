@@ -12,21 +12,20 @@ The main idea is to use fragments as snacks. In that way a user of this library 
 
 ## Quick Start
 
-Create `SnackCommandBus` and register `SnackNavigationLifecycleCallbacks` in your `Application.onCreate` method
+Create `SnackCommandEmitter` using extension for app `Application.createSnackEmitter` or builder function `SnackCommandEmitter` in your `Application.onCreate` method
 
 ```kotlin
 class App: Application() {
-
-    val snackCommandBus = SnackCommandBus()
-
-    override fun onCreate() {
-        super.onCreate()
-        registerActivityLifecycleCallbacks(
-            SnackNavigationLifecycleCallbacks(snackCommandBus)
-        )
-    }
+    val snackCommandEmitter = SnackCommandEmitter(this)
 }
 ```
+or
+```kotlin
+class App: Application() {
+    val snackCommandEmitter = createSnackEmitter()
+}
+```
+
 
 Create a fragment file which you want to use as a snack
 
