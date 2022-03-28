@@ -81,11 +81,12 @@ snackCommandBus.open(snack)
 
 ## Roadmap
 
-1. Implement snack queue and config with strategies of adding snacks to queue when the navigator is not able to show them, drop oldest or even show only last added
-2. Add tests
-3. Add documentation
-4. More examples
-5. Deploy artefacts to have the ability of using the library with the gradle
+1. Migrate to FragmentFactory for fragment creation instead of using reflection
+2. Implement snack queue and config with strategies of adding snacks to queue when the navigator is not able to show them, drop oldest or even show only last added
+3. Add tests
+4. Add documentation
+5. More examples
+6. Deploy artefacts to have the ability of using the library with the gradle
 
 ## Videos
 <details>
