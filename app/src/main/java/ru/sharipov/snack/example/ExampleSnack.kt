@@ -18,7 +18,7 @@ sealed class ExampleSnack: DefaultSnack() {
 
         override val tag: String get() = "ExampleSnackCommand $text"
         override val timeoutMs: Long? = 1500
-        override val fragmentClass: Class<out Fragment> = ExampleSnackFragment::class.java
+        override val className: String = "ru.sharipov.snack.example.ExampleSnackFragment"
 
         override fun prepareBundle(bundle: Bundle) {
             bundle.putAll(
@@ -52,8 +52,8 @@ sealed class ExampleSnack: DefaultSnack() {
 
     object ComplicatedSnack: ExampleSnack() {
         override val timeoutMs: Long? = null
-        override val fragmentClass: Class<out Fragment> = ComplicatedSnackFragment::class.java
         override val animations: Animations = FromBottomToBottomAnimations
         override val containerId: Int = R.id.complicated_snack_container
+        override val className: String = "ru.sharipov.snack.example.complicated.ComplicatedSnackFragment"
     }
 }

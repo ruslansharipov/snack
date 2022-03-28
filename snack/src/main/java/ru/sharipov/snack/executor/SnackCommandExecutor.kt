@@ -2,6 +2,7 @@ package ru.sharipov.snack.executor
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import ru.sharipov.snack.animations.Animations
@@ -9,14 +10,15 @@ import ru.sharipov.snack.command.SnackCommand
 import ru.sharipov.snack.command.Snack
 import ru.sharipov.snack.extensions.removeFragment
 import ru.sharipov.snack.extensions.removeOnTimeout
-import ru.sharipov.snack.factory.SnackFragmentFactory
 import kotlin.collections.ArrayList
 
 internal class SnackCommandExecutor(
     private val fragmentManager: FragmentManager,
-    private val fragmentFactory: SnackFragmentFactory,
+    optionalFragmentFactory: FragmentFactory?,
     savedState: Bundle?
 ) {
+
+    private val fragmentFactory: FragmentFactory = optionalFragmentFactory ?: fragmentManager.fragmentFactory
 
     init {
         restoreState(savedState)
@@ -78,15 +80,8 @@ internal class SnackCommandExecutor(
 
     private fun createSnackFragment(snack: Snack): Fragment {
         val snackStateEntity = SnackStateEntity(snack.tag, snack.timeoutMs, snack.animations?.exit)
-        val snackFragment = fragmentFactory.createFragment(snack)
-        val bundle = Bundle()
-        bundle.putSerializable(SNACK_STATE_ENTITY_KEY, snackStateEntity)
-        snack.prepareBundle(bundle)
-        if (snackFragment.arguments == null) {
-            snackFragment.arguments = bundle
-        } else {
-            snackFragment.arguments?.putAll(bundle)
-        }
+        val snackFragment = snack.createFragment(fragmentFactory)
+        snackFragment.arguments?.putSerializable(SNACK_STATE_ENTITY_KEY, snackStateEntity)
         return snackFragment
     }
 

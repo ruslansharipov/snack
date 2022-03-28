@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
@@ -17,7 +18,7 @@ import ru.sharipov.snack.factory.SnackFragmentFactory
 
 class SnackNavigationLifecycleCallbacks(
     snackCommandBus: SnackCommandBus,
-    private val fragmentFactory: SnackFragmentFactory
+    private val fragmentFactory: FragmentFactory? = null
 ): DefaultActivityLifecycleCallbacks() {
 
     private val handler = Handler(Looper.getMainLooper())
