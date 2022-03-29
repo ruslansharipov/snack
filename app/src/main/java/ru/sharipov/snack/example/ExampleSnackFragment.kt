@@ -21,12 +21,12 @@ class ExampleSnackFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val colorRes = requireArguments().getInt(ARGS_COLOR_RES)
+        val bgRes = requireArguments().getInt(ARGS_BG_RES)
         val text = requireArguments().getString(ARGS_TEXT)
         val snackContainer = view.findViewById<FrameLayout>(R.id.example_snack_container)
         val snackTv = view.findViewById<TextView>(R.id.example_snack_tv)
         snackTv.setText(text)
-        snackTv.setBackgroundResource(colorRes)
+        snackTv.setBackgroundResource(bgRes)
         snackContainer.updateLayoutParams<FrameLayout.LayoutParams> {
             gravity = requireArguments().getInt(ARGS_GRAVITY)
         }
@@ -34,7 +34,7 @@ class ExampleSnackFragment: Fragment() {
 
     companion object {
         const val ARGS_TEXT = "ExampleSnackFragment.ARGS_TEXT"
-        const val ARGS_COLOR_RES = "ExampleSnackFragment.ARGS_COLOR_RES"
+        const val ARGS_BG_RES = "ExampleSnackFragment.ARGS_BG_RES"
         const val ARGS_GRAVITY = "ExampleSnackFragment.ARGS_GRAVITY"
     }
 }

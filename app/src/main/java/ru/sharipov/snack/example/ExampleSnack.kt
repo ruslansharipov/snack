@@ -3,17 +3,15 @@ package ru.sharipov.snack.example
 import android.os.Bundle
 import android.view.Gravity
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import ru.sharipov.snack.R
 import ru.sharipov.snack.animations.*
 import ru.sharipov.snack.command.DefaultSnack
-import ru.sharipov.snack.example.complicated.ComplicatedSnackFragment
 
 sealed class ExampleSnack: DefaultSnack() {
 
     sealed class SimpleSnack: ExampleSnack() {
         abstract val text: String
-        abstract val colorRes: Int
+        abstract val bgRes: Int
         abstract val gravity: Int
 
         override val tag: String get() = "ExampleSnackCommand $text"
@@ -23,7 +21,7 @@ sealed class ExampleSnack: DefaultSnack() {
         override fun prepareBundle(bundle: Bundle) {
             bundle.putAll(
                 bundleOf(
-                    ExampleSnackFragment.ARGS_COLOR_RES to colorRes,
+                    ExampleSnackFragment.ARGS_BG_RES to bgRes,
                     ExampleSnackFragment.ARGS_TEXT to text,
                     ExampleSnackFragment.ARGS_GRAVITY to gravity
                 )
@@ -31,13 +29,13 @@ sealed class ExampleSnack: DefaultSnack() {
         }
 
         data class TopErrorSnack(override val text: String): SimpleSnack() {
-            override val colorRes: Int = android.R.color.holo_red_light
+            override val bgRes: Int = R.drawable.bg_rounded_red_12
             override val gravity: Int = Gravity.TOP
             override val animations: Animations = FadeInFadeOutAnimations
         }
 
         data class BottomSuccessSnack(override val text: String): SimpleSnack() {
-            override val colorRes: Int = android.R.color.holo_green_light
+            override val bgRes: Int = R.drawable.bg_rounded_green_12
             override val gravity: Int = Gravity.BOTTOM
             override val animations: Animations = FromBottomToBottomAnimations
         }
@@ -45,7 +43,7 @@ sealed class ExampleSnack: DefaultSnack() {
         object BottomRightSnack: SimpleSnack() {
             override val text: String = "Bottom in, right out"
             override val animations: Animations = FromBottomToRightAnimations
-            override val colorRes: Int = android.R.color.holo_green_light
+            override val bgRes: Int = R.drawable.bg_rounded_green_12
             override val gravity: Int = Gravity.BOTTOM
         }
     }
