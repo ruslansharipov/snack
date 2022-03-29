@@ -60,8 +60,8 @@ data class ExampleSnack(val text: String): Snack {
 Show and hide snack
 ```kotlin
 val snack = ExampleSnack(text = "Some useful information for the user here")
-snackCommandBus.open(snack)
-//snackCommandBus.close(snack)
+snackCommandEmitter.open(snack)
+//snackCommandEmitter.close(snack)
 ```
 
 ## Tips
