@@ -12,17 +12,11 @@ The main idea is to use fragments as snacks. In that way a user of this library 
 
 ## Quick Start
 
-Create `SnackCommandEmitter` using extension for app `Application.createSnackEmitter` or builder function `SnackCommandEmitter` in your `Application.onCreate` method
+Create `SnackCommandEmitter` using creator function in `SnackCommandEmitter`
 
 ```kotlin
 class App: Application() {
-    val snackCommandEmitter = SnackCommandEmitter(this)
-}
-```
-or
-```kotlin
-class App: Application() {
-    val snackCommandEmitter = createSnackEmitter()
+    val snackCommandEmitter = SnackCommandEmitter.create(this)
 }
 ```
 
