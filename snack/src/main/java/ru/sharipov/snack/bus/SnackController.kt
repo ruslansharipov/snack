@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentFactory
 import ru.sharipov.snack.callbacks.SnackNavigationLifecycleCallbacks
 import ru.sharipov.snack.command.Snack
 
-interface SnackCommandEmitter {
+interface SnackController {
 
     fun open(snack: Snack)
 
@@ -18,7 +18,7 @@ interface SnackCommandEmitter {
         fun create(
             application: Application,
             fragmentFactory: FragmentFactory? = null
-        ) : SnackCommandEmitter {
+        ) : SnackController {
             val snackCommandBus = SnackCommandBus()
             val callbacks = SnackNavigationLifecycleCallbacks(snackCommandBus, fragmentFactory)
 

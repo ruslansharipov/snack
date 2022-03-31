@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">snack</string>
+    <string name="icon_snack_title">Snack title</string>
+    <string name="icon_snack_subtitle">Very important information</string>
 </resources>

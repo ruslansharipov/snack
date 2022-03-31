@@ -7,7 +7,7 @@ import ru.sharipov.snack.command.Snack
 import ru.sharipov.snack.command.SnackCommand
 
 internal class SnackCommandBus :
-    SnackCommandEmitter,
+    SnackController,
     SnackCommandObservable {
 
     private val commandSharedFlow = MutableSharedFlow<SnackCommand>(

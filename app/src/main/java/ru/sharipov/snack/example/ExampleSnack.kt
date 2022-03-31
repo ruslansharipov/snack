@@ -37,12 +37,12 @@ sealed class ExampleSnack: DefaultSnack() {
         data class BottomSuccessSnack(override val text: String): SimpleSnack() {
             override val bgRes: Int = R.drawable.bg_rounded_green_12
             override val gravity: Int = Gravity.BOTTOM
-            override val animations: Animations = FromBottomToBottomAnimations
+            override val animations: Animations = BottomInBottomOutAnimations
         }
 
         object BottomRightSnack: SimpleSnack() {
             override val text: String = "Bottom in, right out"
-            override val animations: Animations = FromBottomToRightAnimations
+            override val animations: Animations = BottomInRightOutAnimations
             override val bgRes: Int = R.drawable.bg_rounded_green_12
             override val gravity: Int = Gravity.BOTTOM
         }
@@ -50,8 +50,14 @@ sealed class ExampleSnack: DefaultSnack() {
 
     object ComplicatedSnack: ExampleSnack() {
         override val timeoutMs: Long? = null
-        override val animations: Animations = FromBottomToBottomAnimations
+        override val animations: Animations = BottomInBottomOutAnimations
         override val containerId: Int = R.id.complicated_snack_container
         override val className: String = "ru.sharipov.snack.example.complicated.ComplicatedSnackFragment"
+    }
+
+    object SnackWithIcon: ExampleSnack() {
+        override val timeoutMs: Long = 3000
+        override val className: String = "ru.sharipov.snack.example.icon.IconSnackFragment"
+        override val animations: Animations = TopInRightOutAnimations
     }
 }

@@ -9,49 +9,61 @@
     tools:context=".example.MainActivity">
 
     <LinearLayout
-        android:gravity="bottom"
-        android:layout_marginHorizontal="8dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:gravity="bottom"
+        android:orientation="vertical">
 
+        <Button
+            android:id="@+id/top_btn"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Top-Top" />
 
-    <Button
-        android:id="@+id/top_btn"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="Top-Top" />
+        <Button
+            android:id="@+id/bottom_btn"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:text="Bottom-Bottom" />
 
-    <Button
-        android:id="@+id/bottom_btn"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="4dp"
-        android:layout_weight="1"
-        android:text="Bottom-Bottom" />
+        <Button
+            android:id="@+id/bottom_right_btn"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:text="Bottom-Right" />
 
-    <Button
-        android:id="@+id/bottom_right_btn"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="4dp"
-        android:layout_weight="1"
-        android:text="Bottom-Right" />
+        <Button
+            android:text="Snack with custom layout"
+            android:layout_weight="1"
+            android:id="@+id/button_icon"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
 
-    <Button
-        android:id="@+id/button_complex"
-        android:layout_marginStart="4dp"
-        android:text="Complex"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/button_complex"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:text="Complex" />
+
+        <TextView
+            android:gravity="center"
+            android:text="Placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
 
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/complicated_snack_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
