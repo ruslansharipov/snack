@@ -1,4 +1,4 @@
-# Snack
+# SnackController
 
 Lifecycle-aware library to show fully customizable snacks.  
 Inspired by [Cicerone](https://github.com/terrakok/Cicerone) and [Surf-Navigation](https://github.com/surfstudio/SurfAndroidStandard/tree/dev/G-0.5.0/navigation).
@@ -12,11 +12,11 @@ The main idea is to use fragments as snacks. In that way a user of this library 
 
 ## Quick Start
 
-Create `SnackCommandEmitter` using creator function in `SnackCommandEmitter`
+Create `SnackController`
 
 ```kotlin
 class App: Application() {
-    val snackCommandEmitter = SnackCommandEmitter.create(this)
+    val snackController = SnackController.create(this)
 }
 ```
 
@@ -60,8 +60,8 @@ data class ExampleSnack(val text: String): Snack {
 Show and hide snack
 ```kotlin
 val snack = ExampleSnack(text = "Some useful information for the user here")
-snackCommandBus.open(snack)
-//snackCommandBus.close(snack)
+snackController.open(snack)
+//snackController.close(snack)
 ```
 
 ## Tips
